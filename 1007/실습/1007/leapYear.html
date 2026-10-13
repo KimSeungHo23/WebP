@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>윤년 판별기</title>
+</head>
+<body>
+	<h1>윤년 판별기</h1>
+	<button id="check" type="button">년도 입력 및 확인</button>
+	<p id="result" aria-live="polite"></p>
+
+	<script>
+		const result = document.getElementById('result');
+
+		function checkLeapYear() {
+			const input = prompt('년도를 입력해 주세요.');
+			if (input === null) return;
+
+			const year = Number(input);
+			if (!Number.isSafeInteger(year) || year < 1) {
+				result.textContent = '1 이상의 정수를 입력해 주세요.';
+				return;
+			}
+
+			const isLeapYear = year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
+			result.textContent = `${year}년은 ${isLeapYear ? '윤년' : '평년'}입니다.`;
+		}
+
+		document.getElementById('check').addEventListener('click', checkLeapYear);
+	</script>
+</body>
+</html>
