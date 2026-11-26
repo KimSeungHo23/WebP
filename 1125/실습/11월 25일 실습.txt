@@ -1,0 +1,933 @@
+김승호 포트폴리오
+Code .gs
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('index')
+    .setTitle('김승호 | 개인 포트폴리오')
+    .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+}
+
+index.html
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>김승호 | Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #080d18;
+      --panel: #101a2b;
+      --panel2: #142238;
+      --text: #f3f6fc;
+      --muted: #a6b3c8;
+      --line: rgba(255,255,255,.11);
+      --blue: #6ea8ff;
+      --cyan: #63e0d0;
+      --max: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Pretendard, sans-serif;
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 44px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(16px);
+      background: rgba(8,13,24,.85);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 800;
+      letter-spacing: .08em;
+      font-size: 18px;
+    }
+
+    .logo span {
+      color: var(--cyan);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: var(--cyan);
+    }
+
+    .hero {
+      min-height: 690px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 56px;
+      align-items: center;
+      padding: 86px 0 100px;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .18em;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.12;
+      letter-spacing: -.055em;
+      margin: 18px 0 24px;
+    }
+
+    h1 .accent {
+      color: var(--blue);
+    }
+
+    .hero-copy {
+      max-width: 610px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .hero-copy strong {
+      color: var(--text);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 34px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: .2s;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #07101f;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(110,168,255,.22);
+    }
+
+    .btn-ghost {
+      border: 1px solid var(--line);
+      color: var(--text);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .profile-frame {
+      width: min(100%, 360px);
+      aspect-ratio: 4/5;
+      justify-self: end;
+      position: relative;
+    }
+
+    .profile-frame:before {
+      content: "";
+      position: absolute;
+      inset: 18px -18px -18px 18px;
+      border: 1px solid rgba(99,224,208,.55);
+      border-radius: 22px;
+    }
+
+    .profile-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg,#1c3554,#101a2b);
+    }
+
+    .photo-note {
+      position: absolute;
+      z-index: 2;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      padding: 10px 13px;
+      border-radius: 10px;
+      background: rgba(8,13,24,.78);
+      color: #dce8f8;
+      font-size: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    section {
+      padding: 92px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-kicker {
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .16em;
+    }
+
+    h2 {
+      margin: 10px 0 14px;
+      font-size: clamp(30px,4vw,44px);
+      line-height: 1.2;
+      letter-spacing: -.04em;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 650px;
+      margin: 0 0 38px;
+    }
+
+    .focus-grid,
+    .about-grid,
+    .hobby-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .focus-card,
+    .info-card,
+    .hobby-card {
+      background: linear-gradient(145deg,rgba(20,34,56,.95),rgba(13,23,39,.95));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      transition: .25s;
+    }
+
+    .focus-card:hover,
+    .info-card:hover,
+    .hobby-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(99,224,208,.5);
+    }
+
+    .number {
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .1em;
+    }
+
+    .focus-card h3 {
+      font-size: 25px;
+      margin: 12px 0 10px;
+    }
+
+    .focus-card p,
+    .info-card p,
+    .hobby-card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      border: 1px solid rgba(110,168,255,.25);
+      background: rgba(110,168,255,.08);
+      color: #c8dcff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    .info-card h3,
+    .hobby-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .hobby-icon {
+      font-size: 30px;
+      margin-bottom: 14px;
+    }
+
+    .contact {
+      background: radial-gradient(
+        ellipse at 80% 20%,
+        rgba(99,224,208,.09),
+        transparent 40%
+      );
+    }
+
+    .contact-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .contact-inner p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 25px 0;
+      color: #78869d;
+      font-size: 12px;
+    }
+
+    @media (max-width:760px) {
+      .nav {
+        height: 64px;
+      }
+
+      .nav-links {
+        gap: 14px;
+        font-size: 12px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 42px;
+        padding: 70px 0 82px;
+      }
+
+      .profile-frame {
+        width: min(78%,320px);
+        justify-self: center;
+      }
+
+      .focus-grid,
+      .about-grid,
+      .hobby-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 70px 0;
+      }
+
+      .contact-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width:420px) {
+      .wrap {
+        width: calc(100% - 32px);
+      }
+
+      .nav-links {
+        gap: 10px;
+      }
+
+      .nav-links a {
+        font-size: 11px;
+      }
+
+      .logo {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 상단 메뉴 -->
+  <header>
+    <div class="wrap nav">
+
+      <a class="logo" href="#home">
+        KIM <span>SEUNG HO</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#about">소개</a>
+        <a href="#focus">전공 분야</a>
+        <a href="#hobby">취미</a>
+        <a href="#contact">연락</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 메인 화면 -->
+    <div class="wrap">
+
+      <section class="hero" id="home" style="border:0">
+
+        <div>
+
+          <div class="eyebrow">
+            2004 · KIM SEUNG HO
+          </div>
+
+          <h1>
+            안녕하세요,<br>
+            <span class="accent">김승호</span>입니다.
+          </h1>
+
+          <p class="hero-copy">
+            컴퓨터 시스템의 원리를 이해하고
+            새로운 기술을 탐구하는 개발자 지망생입니다.<br><br>
+
+            특히 <strong>운영체제(Operating Systems)</strong>와
+            <strong>지능형 시스템(Intelligent Systems)</strong>에
+            관심을 가지고 공부하고 있습니다.
+          </p>
+
+          <div class="actions">
+
+            <a class="btn btn-primary" href="#focus">
+              전공 분야 보기
+            </a>
+
+            <a class="btn btn-ghost" href="#about">
+              나를 소개합니다
+            </a>
+
+          </div>
+
+        </div>
+
+        <!-- 프로필 사진 -->
+        <div class="profile-frame">
+
+          <img
+            class="profile-photo"
+            src="https://placehold.co/720x900/142238/eaf2ff?text=KIM+SEUNG+HO"
+            alt="김승호 프로필 사진"
+          >
+
+          <div class="photo-note">
+            KIM SEUNG HO · 2004
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- 자기소개 -->
+    <section id="about">
+
+      <div class="wrap">
+
+        <div class="section-kicker">
+          01 / ABOUT ME
+        </div>
+
+        <h2>저를 소개합니다.</h2>
+
+        <p class="section-desc">
+          안녕하세요. 2004년생 김승호입니다.
+          컴퓨터와 소프트웨어에 관심을 가지고
+          다양한 기술을 배우며 성장하고 있습니다.
+          단순히 코드를 작성하는 것을 넘어
+          컴퓨터 시스템이 동작하는 원리를 이해하는
+          개발자가 되는 것이 목표입니다.
+        </p>
+
+        <div class="about-grid">
+
+          <article class="info-card">
+
+            <h3>PROFILE</h3>
+
+            <p>
+              이름 : 김승호<br>
+              출생 : 2004년<br>
+              관심 분야 : 운영체제, 지능형 시스템
+            </p>
+
+          </article>
+
+          <article class="info-card">
+
+            <h3>MY GOAL</h3>
+
+            <p>
+              전공 지식을 꾸준히 쌓고 새로운 기술을
+              실제 프로젝트에 적용할 수 있는
+              개발자로 성장하고 싶습니다.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 전공 분야 -->
+    <section id="focus">
+
+      <div class="wrap">
+
+        <div class="section-kicker">
+          02 / MY MAJOR
+        </div>
+
+        <h2>전공 핵심 분야</h2>
+
+        <p class="section-desc">
+          제가 특히 집중하고 있는 두 분야입니다.
+          각 분야의 핵심 개념을 이해하고
+          실제로 활용하는 것을 목표로 합니다.
+        </p>
+
+        <div class="focus-grid">
+
+          <!-- 운영체제 -->
+          <article class="focus-card">
+
+            <div class="number">
+              01 — SYSTEM
+            </div>
+
+            <h3>
+              운영체제<br>
+              <span style="color:var(--blue)">
+                Operating Systems
+              </span>
+            </h3>
+
+            <p>
+              컴퓨터 하드웨어와 소프트웨어 사이에서
+              시스템 자원을 효율적으로 관리하는
+              운영체제의 구조와 동작 원리를 공부합니다.
+              프로세스, 메모리, CPU 등 컴퓨터 시스템의
+              핵심 요소에 관심이 있습니다.
+            </p>
+
+            <div class="tags">
+              <span class="tag">프로세스</span>
+              <span class="tag">스레드</span>
+              <span class="tag">CPU 스케줄링</span>
+              <span class="tag">메모리 관리</span>
+              <span class="tag">파일 시스템</span>
+              <span class="tag">동기화</span>
+            </div>
+
+          </article>
+
+          <!-- 지능형 시스템 -->
+          <article class="focus-card">
+
+            <div class="number">
+              02 — INTELLIGENCE
+            </div>
+
+            <h3>
+              지능형 시스템<br>
+              <span style="color:var(--cyan)">
+                Intelligent Systems
+              </span>
+            </h3>
+
+            <p>
+              데이터와 알고리즘을 바탕으로 정보를 분석하고,
+              학습과 추론을 통해 문제를 해결하는
+              지능형 시스템에 관심이 있습니다.
+              인공지능 기술이 다양한 분야에 적용되는
+              과정에 흥미를 가지고 있습니다.
+            </p>
+
+            <div class="tags">
+              <span class="tag">인공지능</span>
+              <span class="tag">머신러닝</span>
+              <span class="tag">데이터 분석</span>
+              <span class="tag">알고리즘</span>
+              <span class="tag">자동화</span>
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 취미 -->
+    <section id="hobby">
+
+      <div class="wrap">
+
+        <div class="section-kicker">
+          03 / HOBBIES
+        </div>
+
+        <h2>일상 속 나의 에너지</h2>
+
+        <p class="section-desc">
+          공부뿐 아니라 다양한 활동을 통해
+          새로운 자극을 얻고 균형 있는 일상을 만들어 갑니다.
+        </p>
+
+        <div class="hobby-grid">
+
+          <article class="hobby-card">
+
+            <div class="hobby-icon">🏃</div>
+
+            <h3>운동</h3>
+
+            <p>
+              꾸준한 운동으로 체력과 집중력을 관리합니다.
+              목표를 세우고 조금씩 기록을 개선해 나가는
+              과정에서 성취감을 얻습니다.
+            </p>
+
+          </article>
+
+          <article class="hobby-card">
+
+            <div class="hobby-icon">🎮</div>
+
+            <h3>게임</h3>
+
+            <p>
+              게임을 즐기며 전략적으로 생각하고
+              상황에 맞게 판단하는 것을 좋아합니다.
+              여가 시간을 보내는 즐거운 취미입니다.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- 연락 -->
+    <section class="contact" id="contact">
+
+      <div class="wrap contact-inner">
+
+        <div>
+
+          <div class="section-kicker">
+            04 / CONTACT
+          </div>
+
+          <h2>함께 배우고 성장해요.</h2>
+
+          <p>
+            새로운 기술과 아이디어를 나누며
+            함께 성장할 기회를 기다립니다.
+          </p>
+
+        </div>
+
+        <a class="btn btn-primary"
+           href="mailto:your-email@example.com">
+          이메일 보내기 ↗
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- 하단 -->
+  <footer>
+
+    <div class="wrap">
+      © <span id="year"></span> KIM SEUNG HO.
+      All Rights Reserved.
+    </div>
+
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent =
+      new Date().getFullYear();
+  </script>
+
+</body>
+</html>
+
+
+11월 25저녁 신청받기
+Code.gs
+
+const SPREADSHEET_ID = "1a9iHMJIKy3lNpY41yQFhJemBDOSVCz8uWT1VLn4mZSw";
+const SHEET_NAME = "시트1";
+
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile("index")
+    .setTitle("11월25일 저녁 신청 받기");
+}
+
+function submitForm(data) {
+  const sheet = SpreadsheetApp
+    .openById(SPREADSHEET_ID)
+    .getSheetByName(SHEET_NAME);
+
+  if (!sheet) {
+    throw new Error("시트 이름을 확인해주세요.");
+  }
+
+  if (!data.name || !data.food) {
+    throw new Error("이름과 음식을 입력해주세요.");
+  }
+
+  sheet.appendRow([
+    data.name,
+    data.food,
+    data.message
+  ]);
+
+  return "답장 감사합니다.";
+}
+
+
+index.himl
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>11월25일 저녁 신청 받기</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      width: 100%;
+      max-width: 420px;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #222;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 7px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 7px;
+      font-size: 15px;
+    }
+
+    textarea {
+      height: 100px;
+      resize: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 25px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+
+    #result {
+      display: none;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      padding: 40px 10px;
+      color: #2563eb;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container" id="formContainer">
+
+    <h2>11월25일 저녁 신청 받기</h2>
+
+    <form id="applicationForm">
+
+      <label for="name">이름</label>
+      <input
+        type="text"
+        id="name"
+        placeholder="이름을 입력하세요"
+        required
+      >
+
+      <label for="food">음식</label>
+      <input
+        type="text"
+        id="food"
+        placeholder="먹고 싶은 음식을 입력하세요"
+        required
+      >
+
+      <label for="message">하고 싶은 말</label>
+      <textarea
+        id="message"
+        placeholder="하고 싶은 말을 입력하세요"
+      ></textarea>
+
+      <button type="submit" id="submitBtn">확인</button>
+
+    </form>
+
+  </div>
+
+  <div class="container" id="result">
+    답장 감사합니다.
+  </div>
+
+  <script>
+    document.getElementById("applicationForm")
+      .addEventListener("submit", function(e) {
+
+        e.preventDefault();
+
+        const data = {
+          name: document.getElementById("name").value.trim(),
+          food: document.getElementById("food").value.trim(),
+          message: document.getElementById("message").value.trim()
+        };
+
+        if (!data.name || !data.food) {
+          alert("이름과 음식을 입력해주세요.");
+          return;
+        }
+
+        const button = document.getElementById("submitBtn");
+
+        button.disabled = true;
+        button.textContent = "제출 중...";
+
+        google.script.run
+          .withSuccessHandler(function(response) {
+
+            document.getElementById("formContainer").style.display = "none";
+            document.getElementById("result").style.display = "block";
+
+          })
+          .withFailureHandler(function(error) {
+
+            alert("제출에 실패했습니다. 다시 시도해주세요.");
+
+            button.disabled = false;
+            button.textContent = "확인";
+
+          })
+          .submitForm(data);
+
+      });
+  </script>
+
+</body>
+</html>
